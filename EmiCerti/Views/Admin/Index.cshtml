@@ -1,0 +1,43 @@
+﻿@model IEnumerable<EmiCerti.Data.Project>
+@{
+    ViewData["Title"] = "Project list";
+}
+
+
+
+<div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <h2> @ViewData["Title"] </h2>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+             <br />
+        </div>
+    </div>
+
+<h4>Select the project to send the HBARs raised</h4>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Token</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var project in Model)
+        {
+            <tr>
+                <td>@project.Name</td>
+                <td>@project.TokenSymbol</td>
+                <td>
+                    @Html.ActionLink("Details","View","Project",new {id = project.Id}, new {@class="btn btn-primary"}) 
+                    @Html.ActionLink("Approve","ApproveProject","Admin",new {id = project.Id}, new {@class="btn btn-primary"}) 
+                    @Html.ActionLink("Send HBAR raised","ApproveSendHBAR","Admin",new {id = project.Id}, new {@class="btn btn-secondary"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,44 @@
+﻿@model EmiCerti.Models.ProjectModel.IndexProjectViewModel
+@{
+    ViewData["Title"] = "Project list";
+}
+
+
+
+<div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <h2> @ViewData["Title"] </h2>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <a href="@Url.Action("Create")" class="btn btn-primary">Add your project </a> <br />
+        </div>
+    </div>
+
+
+    <br /><br /><br /><br />
+<h4>Available projects</h4>
+
+
+@foreach(var project in Model.AvailableProjects)
+{
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <img src="@project.ImageUrl" alt="@project.ImageUrl" style="height:250px;" class="img-rounded img-responsive" />
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <h3 class="text-2xl sm:text-3xl font-bold text-gray-900" id="project-1">@project.Name</h3>
+            <p>
+                Token: <b>@project.TokenSymbol</b> <br />
+                Quantity: <b>@project.TokenQuantity</b> <br />
+                Purchased tokens: <b>@Model.GetTokenBought(project.Id)</b> <br />
+                Transactions: <b>@Model.GetTokenBoughtByQty(project.Id)</b> <br />
+                
+            </p>
+            <p>
+                You can buy tokens @project.TokenSymbol: <b>@project.Expiration.GetValueOrDefault().ToLocalTime()</b> <br />
+                <a class="btn btn-primary" href="@Url.Action("View","Project",new {id = project.Id})">See details</a>
+            </p>
+        </div>
+    </div>
+    
+}

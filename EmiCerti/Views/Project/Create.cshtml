@@ -1,0 +1,195 @@
+﻿@model EmiCerti.Models.ProjectModel.CreateProjectViewModel
+
+@{
+    ViewBag.Title = "Create Project";
+}
+
+<h2>Create Project</h2>
+
+<div class="alert alert-success">
+    If you are adding your project, remember to add all the details below.
+</div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="row">
+        @Html.LabelFor(m => m.Form.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Form.Name, new { @class = "form-control" }) @Html.ValidationMessageFor(x => x.Form.Name)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.Location, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.Location, new { @class = "form-control" }) @Html.ValidationMessageFor(x => x.Form.Location)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            A detailed location will help your audience really understand where the project is.
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.ProjectType, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.ProjectType, new { @class = "form-control" }) @Html.ValidationMessageFor(x => x.Form.ProjectType)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Specifies the type of project. Carbon footprint reduction, Methane Venting Reduction, etc.
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.WebSite, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.WebSite, new { @class = "form-control", type = "url" }) @Html.ValidationMessageFor(x => x.Form.WebSite)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Put your website, social network or a link with content to your project, so that future token buyers can investigate more and contribute.
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.ImageUrl, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.ImageUrl, new { @class = "form-control", type = "url" }) @Html.ValidationMessageFor(x => x.Form.ImageUrl)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Please upload a link to a photo that shows what you do or what you want to do.
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.Email, new { @class = "form-control", type = "email" }) @Html.ValidationMessageFor(x => x.Form.Email)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Put your email address.
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.OffsetCategory, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.OffsetCategory, new { @class = "form-control" }) @Html.ValidationMessageFor(x => x.Form.OffsetCategory)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Enter the Offset category for your project
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.Protocol, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.Protocol, new { @class = "form-control" }) @Html.ValidationMessageFor(x => x.Form.Protocol)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Enter the protocol (ISO standard) that governs your project
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.Certifier, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.Certifier, new { @class = "form-control" }) @Html.ValidationMessageFor(x => x.Form.Certifier)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Enter the certifier (person or company) who is in charge of certificate your project.
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.Verifier, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.Verifier, new { @class = "form-control" }) @Html.ValidationMessageFor(x => x.Form.Verifier)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Enter the verifier (person or company) who is in charge of verifying your project.
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.ReductionstCO2e, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.ReductionstCO2e, new { @class = "form-control", type = "number", min = "1", step = "1" }) @Html.ValidationMessageFor(x => x.Form.ReductionstCO2e)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Specifies the amount of Reductions (tCO₂e)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.ReductionsPeriodStart, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.ReductionsPeriodStart, new { @class = "form-control", type = "date" }) @Html.ValidationMessageFor(x => x.Form.ReductionsPeriodStart)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Specifies the start date of the reduction period
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.ReductionsPeriodEnd, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.ReductionsPeriodEnd, new { @class = "form-control", type = "date" }) @Html.ValidationMessageFor(x => x.Form.ReductionsPeriodEnd)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Specifies the end date of the reduction period
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.TokenSymbol, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.TokenSymbol, new { @class = "form-control" }) @Html.ValidationMessageFor(x => x.Form.TokenSymbol)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Enter the token symbol for your new project token
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.TokenQuantity, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.TokenQuantity, new { @class = "form-control", type = "number", min = "1", step = "1" }) @Html.ValidationMessageFor(x => x.Form.TokenQuantity)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            Specifies the number of tokens to be created and put up for sale.
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.Expiration, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.Expiration, new { @class = "form-control", type = "date" }) @Html.ValidationMessageFor(x => x.Form.Expiration)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            The final deadline for accept transactions.
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @Html.LabelFor(m => m.Form.OwnerAccountNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.Form.OwnerAccountNumber, new { @class = "form-control" }) @Html.ValidationMessageFor(x => x.Form.OwnerAccountNumber)
+        </div>
+        <div class="col-md-4 alert alert-info">
+            If you don't have an account, you can create one @Html.ActionLink("here","CreateAccount","Home",null,new { target="_blank" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </div>
+    </div>
+
+}
+<br /><br />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,105 @@
+﻿@model EmiCerti.Models.ProjectModel.ViewProjectViewModel
+@{
+    ViewData["Title"] = Model.Project.Name;
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <img src="@Model.Project.ImageUrl" alt="@Model.Project.ImageUrl" style="height:250px;" class="img-rounded img-responsive" />
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 alert alert-success">
+        Website URL: <a href="@Model.Project.WebSite" target="_blank">@Model.Project.WebSite</a> <br />
+        Created At: @Model.Project.CreatedAt.ToLocalTime() <br />
+        Location: <b>@Model.Project.Location</b> <br />
+        Project Type: <b>@Model.Project.ProjectType</b> <br />
+        Offset Category: <b>@Model.Project.OffsetCategory</b> <br />
+        Protocol: <b>@Model.Project.Protocol</b> <br />
+        Certifier: <b>@Model.Project.Certifier</b> <br />
+        Verifier: <b>@Model.Project.Verifier</b> <br />
+        Start Period Reductions: <b>@Model.Project.ReductionsPeriodStart</b> <br />
+        End Period Reductions: <b>@Model.Project.ReductionsPeriodEnd</b> <br />
+        Reductions (tCO₂e): <b>@Model.Project.ReductionstCO2e</b> <br />
+        Token Id: 0.0.<b>@Model.Project.TokenId</b> <br />
+        Token symbol: <b>@Model.Project.TokenSymbol</b> <br />
+        Token quantity: <b>@Model.Project.TokenQuantity</b> <br />
+        Expiration date (for transactions): <b>@Model.Project.Expiration.GetValueOrDefault().ToLocalTime()</b> <br />
+    </div>
+</div>
+
+<h3>Buy</h3>
+
+@if(Model.Project.Expiration.GetValueOrDefault().ToLocalTime() < DateTime.UtcNow.ToLocalTime())
+{
+    <div class="col-lg-6 col-md-6 col-sm-6 alert alert-warning ">
+        This projects has already completed its acquisition timeline.
+    </div>
+}
+else
+{
+    if(ViewBag.BuyConfirmed != null && ViewBag.BuyConfirmed)
+    {
+        <p class="alert alert-success">
+            The transaction was successful
+        </p>
+    }
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @using(Html.BeginForm("View","Project",FormMethod.Post,new { id="form_donation" }))
+    {
+        <input type="hidden" value="@Model.Project.Id" name="Form.Id" />
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 text-justify">
+                HBAR amount (1 HBAR = 1 @Model.Project.TokenSymbol): <br />
+                <input type="number" min="0" name="Form.Amount" required="required" id="amount" class="form-control" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 text-justify">
+                Your account number: <br />
+                <input type="text" name="Form.AccountNumber" required="required" id="secrdset" class="form-control" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 text-justify">
+                Your private key: <br />
+                <input type="text" name="Form.PrivateKey" required="required" id="secret" class="form-control" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 text-justify">
+                <br />
+                <input type="submit" value="Buy" class="btn btn-success" />
+            </div>
+        </div> 
+
+    }
+}
+
+
+<h3>Contributions</h3>
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 text-justify">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Transaction Id</th>
+                    <th>Created At (local time)</th>
+                    <th>From</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach(var transaction in Model.Transactions)
+        {
+            <tr>
+                <td><a target="_blank" href="https://hashscan.io/#/testnet/transaction/0.0.@(transaction.AccountNum)-@(transaction.ValidStartSeconds)-@(transaction.ValidStartNanos)">0.0.@(transaction.AccountNum)-@(transaction.ValidStartSeconds)-@(transaction.ValidStartNanos)</a></td>
+                <td>@transaction.CreatedAt.ToLocalTime()</td>
+                <td><a href="https://hashscan.io/#/testnet/account/0.0.@(transaction.From)" target="_blank">@transaction.From</a></td>
+                <td>@transaction.Quantity</td>
+            </tr>
+
+        }
+        </tbody>
+        </table>
+        <br /><br />
+    </div>
+</div>
+<br /><br />

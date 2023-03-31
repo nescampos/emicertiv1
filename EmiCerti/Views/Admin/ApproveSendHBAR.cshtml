@@ -1,0 +1,65 @@
+﻿@model EmiCerti.Data.Project
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <img src="@Model.ImageUrl" alt="@Model.ImageUrl" style="height:250px;" class="img-rounded img-responsive" />
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 alert alert-success">
+        Website URL: <a href="@Model.WebSite" target="_blank">@Model.WebSite</a> <br />
+        Created At: @Model.CreatedAt.ToLocalTime() <br />
+        Location: <b>@Model.Location</b> <br />
+        Project Type: <b>@Model.ProjectType</b> <br />
+        Offset Category: <b>@Model.OffsetCategory</b> <br />
+        Protocol: <b>@Model.Protocol</b> <br />
+        Certifier: <b>@Model.Certifier</b> <br />
+        Verifier: <b>@Model.Verifier</b> <br />
+        Start Period Reductions: <b>@Model.ReductionsPeriodStart</b> <br />
+        End Period Reductions: <b>@Model.ReductionsPeriodEnd</b> <br />
+        Reductions (tCO₂e): <b>@Model.ReductionstCO2e</b> <br />
+        Token Id: 0.0.<b>@Model.TokenId</b> <br />
+        Token symbol: <b>@Model.TokenSymbol</b> <br />
+        Token quantity: <b>@Model.TokenQuantity</b> <br />
+        Expiration date (for transactions): <b>@Model.Expiration.GetValueOrDefault().ToLocalTime()</b> <br />
+    </div>
+</div>
+
+<h3>Send HBAR</h3>
+
+@if(ViewBag.Status != null)
+{
+    <p class="alert alert-success">
+            ViewBag.Status
+    </p>
+}
+
+@if(Model.HBARsent)
+{
+    <p class="alert alert-warning">
+         You already sent the HBARs to the account
+    </p>
+}
+else
+{
+    @using(Html.BeginForm("ApproveSendHBARPost","Admin",FormMethod.Post,new { id="form_donation" }))
+        {
+            <input type="hidden" value="@Model.Id" name="id" />
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-7 text-justify">
+                    You are going to send HBAR raised to <b>0.0.@Model.OwnerAccountNumber</b>
+                     <br />
+                </div>
+            
+                <div class="col-lg-3 col-md-3 col-sm-3 text-justify">
+                    <br />
+                    <input type="submit" value="Send HBAR" class="btn btn-success" />
+                </div>
+            </div> 
+
+        }
+}
